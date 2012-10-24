@@ -23,7 +23,8 @@ Plugin for Sonar that outputs all alerts to console with the following syntax:
 4. Configure Console log parser with the following ruleset
   - save it, e.g., under $JENKINS_USER_HOME/ruleset.conf
   - specify the ruleset location in Jenkins system configuration -> Console Output Parsing
-5. Add console log parser after Sonar to the desired Jenkins build (see image)
+5. Add console log parser to the desired Jenkins build (see image)
+  - be sure to add it after the Sonar plugin
 
 ###### Sample configuration file for Console log parser plugin
 
@@ -31,3 +32,5 @@ Plugin for Sonar that outputs all alerts to console with the following syntax:
 error /ERROR_THRESHOLD_EXCEEDED/
 warn /WARNING_THRESHOLD_EXCEEDED/
 ```
+
+![Console log parser configuration example](https://github.com/downloads/rjokelai/sonar-build-warner-plugin/console_log_config.png)
