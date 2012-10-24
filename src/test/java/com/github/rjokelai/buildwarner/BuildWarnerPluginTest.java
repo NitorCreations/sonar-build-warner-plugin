@@ -18,30 +18,17 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
  */
 
-package org.sonar.plugins.buildbreaker;
+package com.github.rjokelai.buildwarner;
 
-import org.sonar.api.Plugin;
-import org.sonar.api.Extension;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.core.IsNot.not;
+import static org.junit.Assert.assertThat;
+import org.junit.Test;
 
-import java.util.List;
-import java.util.ArrayList;
-
-public class BuildBreakerPlugin implements Plugin {
-  public String getKey() {
-    return "buildbreaker";
-  }
-
-  public String getName() {
-    return "Build Breaker";
-  }
-
-  public String getDescription() {
-    return "Break the analysis batch if at least one alert threshold is hit.";
-  }
-
-  public List<Class<? extends Extension>> getExtensions() {
-    List<Class<? extends Extension>> list = new ArrayList<Class<? extends Extension>>();
-    list.add(AlertThresholdChecker.class);
-    return list;
+public class BuildWarnerPluginTest {
+  @Test
+  public void oneExtensionIsRegistered() {
+    assertThat(new BuildWarnerPlugin().getExtensions().size(), is(1));
   }
 }

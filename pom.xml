@@ -1,82 +1,98 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <artifactId>parent</artifactId>
-    <groupId>org.codehaus.sonar-plugins</groupId>
-    <version>7</version>
-    <relativePath>../parent</relativePath>
-  </parent>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>sonar-build-breaker-plugin</artifactId>
-  <version>1.0</version>
-  <packaging>sonar-plugin</packaging>
+    <groupId>com.github.rjokelai</groupId>
+    <artifactId>sonar-build-warner-plugin</artifactId>
+    <version>1.0</version>
+    <packaging>sonar-plugin</packaging>
 
-  <name>Sonar Build Breaker Plugin</name>
-  <description>Break the analysis batch if at least one alert threshold is hit.</description>
-  <url>http://docs.codehaus.org/display/SONAR/Build+Breaker</url>
-  <inceptionYear>2009</inceptionYear>
-  <organization>
-    <name>SonarSource</name>
-    <url>http://www.sonarsource.com</url>
-  </organization>
-  <licenses>
-    <license>
-      <name>GNU LGPL 3</name>
-      <url>http://www.gnu.org/licenses/lgpl.txt</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
+    <name>Sonar Build Warner Plugin</name>
+    <description>
+        Outputs to analysis log the number of alerts that the build produced. These can be further processed
+        in, e.g., Jenkins.
+    </description>
+    <url>http://github.com/rjokelai/sonar-build-warner-plugin</url>
+    <inceptionYear>2012</inceptionYear>
+    <licenses>
+        <license>
+            <name>GNU LGPL 3</name>
+            <url>http://www.gnu.org/licenses/lgpl.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
-  <developers>
-    <developer>
-      <id>simon.brandhof</id>
-      <name>Simon Brandhof</name>
-      <timezone>+1</timezone>
-    </developer>
-  </developers>
+    <developers>
+        <developer>
+            <id>simon.brandhof</id>
+            <name>Simon Brandhof</name>
+            <timezone>+1</timezone>
+        </developer>
+        <developer>
+            <id>rjokelai</id>
+            <name>Reko Jokelainen</name>
+            <timezone>+2</timezone>
+        </developer>
+    </developers>
 
-  <scm>
-    <connection>scm:svn:http://svn.codehaus.org/sonar-plugins/tags/sonar-build-breaker-plugin-1.0</connection>
-    <developerConnection>scm:svn:https://svn.codehaus.org/sonar-plugins/tags/sonar-build-breaker-plugin-1.0</developerConnection>
-    <url>scm:svn:https://svn.codehaus.org/sonar-plugins/tags/sonar-build-breaker-plugin-1.0</url>
-  </scm>
-  <issueManagement>
-    <system>JIRA</system>
-    <url>http://jira.codehaus.org/browse/SONARPLUGINS/component/14033</url>
-  </issueManagement>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <target.jdk>1.6</target.jdk>
+        <sonar.version>3.2.1</sonar.version>
+        <sonar.pluginName>Build Warner</sonar.pluginName>
+        <sonar.pluginClass>com.github.rjokelai.buildwarner.BuildWarnerPlugin</sonar.pluginClass>
+    </properties>
 
-  <properties>
-    <sonar.version>1.12</sonar.version>
-    <sonar.pluginName>Build Breaker</sonar.pluginName>
-    <sonar.pluginClass>org.sonar.plugins.buildbreaker.BuildBreakerPlugin</sonar.pluginClass>
-  </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <inherited>true</inherited>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <source>${target.jdk}</source>
+                    <target>${target.jdk}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.sonar</groupId>
+                <artifactId>sonar-packaging-maven-plugin</artifactId>
+                <version>1.1</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <pluginClass>com.github.rjokelai.buildwarner.BuildWarnerPlugin</pluginClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.codehaus.sonar</groupId>
-      <artifactId>sonar-plugin-api</artifactId>
-      <version>${sonar.version}</version>
-      <scope>provided</scope>
-    </dependency>
-    <!-- unit tests -->
-    <dependency>
-      <groupId>org.codehaus.sonar</groupId>
-      <artifactId>sonar-plugin-api</artifactId>
-      <version>${sonar.version}</version>
-      <scope>test</scope>
-      <type>test-jar</type>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.6</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-all</artifactId>
-      <version>1.7</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>org.codehaus.sonar</groupId>
+            <artifactId>sonar-plugin-api</artifactId>
+            <version>${sonar.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- unit tests -->
+        <dependency>
+            <groupId>org.codehaus.sonar</groupId>
+            <artifactId>sonar-plugin-api</artifactId>
+            <version>${sonar.version}</version>
+            <scope>test</scope>
+            <type>test-jar</type>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.6</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.7</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>
