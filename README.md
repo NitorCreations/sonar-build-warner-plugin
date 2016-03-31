@@ -1,6 +1,15 @@
 sonar-build-warner-plugin
 =========================
 
+# DEPRECATED
+
+This plugin was developed for a now legacy version of Sonar. Use the [oliverbk/sonar-build-breaker](https://github.com/olivervbk/sonar-build-breaker) instead, or feel free to PR for newer Sonar support.
+
+----------
+
+# OLD
+
+
 Sonar Build Warner Plugin
 
 Plugin for Sonar that outputs all alerts to console with the following syntax:
